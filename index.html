@@ -3,44 +3,46 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Countdown to Home</title>
+    <title>Countdown to December 20</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #f0f8ff;
-            text-align: center;
+            background-color: #282c34;
+            color: #ffffff;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             height: 100vh;
             margin: 0;
+            text-align: center;
         }
         h1 {
             font-size: 2.5rem;
-            color: #333;
+            margin-bottom: 1rem;
         }
         #timer {
             font-size: 3rem;
             font-weight: bold;
-            color: #ff4500;
         }
     </style>
 </head>
 <body>
-    <h1>Countdown until I'm back home!</h1>
-    <div id="timer"></div>
+    <h1>Countdown to December 20, 2024</h1>
+    <div id="timer">Loading...</div>
 
     <script>
-        // Set the target date (adjust this to your actual date)
-        const targetDate = new Date('2024-12-20T00:00:00'); // Example: December 20, 2023
+        // Set the target date for December 20, 2024
+        const targetDate = new Date("2024-12-20T00:00:00").getTime();
 
+        // Function to update the timer
         function updateTimer() {
-            const now = new Date();
+            const now = new Date().getTime();
             const timeLeft = targetDate - now;
 
             if (timeLeft <= 0) {
-                document.getElementById('timer').textContent = "I'm home!";
+                document.getElementById("timer").textContent = "I'm home!";
+                clearInterval(timerInterval); // Stop the timer when the date is reached
                 return;
             }
 
@@ -49,13 +51,14 @@
             const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
             const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
 
-            document.getElementById('timer').textContent =
-                `${days}d ${hours}h ${minutes}m ${seconds}s`;
+            document.getElementById("timer").textContent = 
+                `${days} days, ${hours} hours, ${minutes} minutes, ${seconds} seconds`;
         }
 
         // Update the timer every second
-        setInterval(updateTimer, 1000);
-        updateTimer(); // Initial call to avoid 1-second delay
+        const timerInterval = setInterval(updateTimer, 1000);
+        updateTimer(); // Initial call to avoid delay
     </script>
 </body>
 </html>
+
