@@ -1,75 +1,78 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Countdown Timers</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background: linear-gradient(135deg, #1e3c72, #2a5298);
-            color: #ffffff;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-            text-align: center;
-        }
-        h1 {
-            font-size: 2rem;
-            margin-bottom: 1rem;
-        }
-        .timer {
-            font-size: 2rem;
-            font-weight: bold;
-            margin-bottom: 2rem;
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Countdown Timers</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #1e3c72, #2a5298);
+      color: #ffffff;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      text-align: center;
+    }
+    h1 {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+    }
+    .timer {
+      font-size: 2rem;
+      font-weight: bold;
+      margin-bottom: 2rem;
+    }
+  </style>
 </head>
 <body>
-    <h1>I am coming home in</h1>
-    <div id="homeTimer" class="timer">Loading...</div>
+  <h1>I am coming home in</h1>
+  <div id="homeTimer" class="timer">Loading...</div>
 
-    <h1>Graduation Countdown</h1>
-    <div id="gradTimer" class="timer">Loading...</div>
+  <h1>Graduation Countdown</h1>
+  <div id="gradTimer" class="timer">Loading...</div>
 
-    <script>
-        function startCountdown(targetDate, elementId) {
-            function updateTimer() {
-                const now = new Date().getTime();
-                const timeLeft = targetDate - now;
+  <script>
+    function startCountdown(targetDate, elementId) {
+      const element = document.getElementById(elementId);
+      if (!element) {
+        console.error("Element not found:", elementId);
+        return;
+      }
 
-                if (timeLeft <= 0) {
-                    document.getElementById(elementId).textContent = "The day has arrived!";
-                    clearInterval(interval);
-                    return;
-                }
+      function updateTimer() {
+        const now = new Date().getTime();
+        const timeLeft = targetDate - now;
 
-                const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
-                const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
-                const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
-
-                document.getElementById(elementId).textContent = 
-                    `${days} days, ${hours} hours, ${minutes} minutes, ${seconds} seconds`;
-            }
-
-            updateTimer(); // Initial update
-            const interval = setInterval(updateTimer, 1000);
+        if (timeLeft <= 0) {
+          element.textContent = "The day has arrived!";
+          clearInterval(interval);
+          return;
         }
 
-        // Set target dates
-        const homeDate = new Date("2025/03/20 00:00:00").getTime();
-        const gradDate = new Date("2025/05/17 00:00:00").getTime();
-        console.log("Grad Date:", gradDate, "Now:", new Date().getTime());
+        const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
 
+        element.textContent = `${days} days, ${hours} hours, ${minutes} minutes, ${seconds} seconds`;
+      }
 
-        // Start countdowns
-        startCountdown(homeDate, "homeTimer");
-        startCountdown(gradDate, "gradTimer");
-    </script>
+      updateTimer();
+      const interval = setInterval(updateTimer, 1000);
+    }
+
+    const homeDate = new Date("2025/03/20 00:00:00").getTime();
+    const gradDate = new Date("2025/05/17 00:00:00").getTime();
+
+    console.log("Home date:", homeDate);
+    console.log("Grad date:", gradDate);
+
+    startCountdown(homeDate, "homeTimer");
+    startCountdown(gradDate, "gradTimer");
+  </script>
 </body>
 </html>
-
