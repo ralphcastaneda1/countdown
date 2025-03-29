@@ -37,20 +37,19 @@
 
   <script>
     function startCountdown(targetDate, elementId) {
-      const element = document.getElementById(elementId);
-      if (!element) {
-        console.error("Element not found:", elementId);
-        return;
-      }
+    const element = document.getElementById(elementId);
+    if (!element) return;
 
-      function updateTimer() {
+    let interval; // <-- Declare it first
+
+    function updateTimer() {
         const now = new Date().getTime();
         const timeLeft = targetDate - now;
 
         if (timeLeft <= 0) {
-          element.textContent = "The day has arrived!";
-          clearInterval(interval);
-          return;
+            element.textContent = "The day has arrived!";
+            clearInterval(interval);
+            return;
         }
 
         const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
@@ -59,7 +58,12 @@
         const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
 
         element.textContent = `${days} days, ${hours} hours, ${minutes} minutes, ${seconds} seconds`;
-      }
+    }
+
+    interval = setInterval(updateTimer, 1000);
+    updateTimer(); // Now call it AFTER interval is defined
+}
+
 
       updateTimer();
       const interval = setInterval(updateTimer, 1000);
